@@ -8,20 +8,15 @@ class BarrageMainView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     BarrageProvider barrageProvider = Provider.of<BarrageProvider>(context);
     double width = MediaQuery.of(context).size.width;
     var widgets = List<Widget>();
     var barrageList = barrageProvider.barrageList;
-    for (var i = 0; i < barrageList.length; i++) {
-      for (var j = 0; j < barrageList[i].length; j++) {
-        var item = barrageList[i][j];
-        if (item.toLeft > width) {
-          continue;
-        }
-        widgets.add(
-          Positioned(
-            top: i * (item.itemHeight + 8),
+    barrageList.forEach((itemList) {
+      itemList.forEach((item) {
+        if (item.toLeft < width) {
+          var widget = Positioned(
+            top: item.line * (item.itemHeight + 8),
             left: item.toLeft,
             child: GestureDetector(
               child: BarrageItemView(item),
@@ -31,10 +26,11 @@ class BarrageMainView extends StatelessWidget {
               },
               onPanDown: (e) => print("按下的位置${e.globalPosition}"),
             ),
-          ),
-        );
-      }
-    }
+          );
+          widgets.add(widget);
+        }
+      });
+    });
     return Stack(children: widgets);
   }
 }
@@ -59,12 +55,12 @@ class BarrageItemView extends StatelessWidget {
           ),
         ),
         CircleAvatar(
-          backgroundImage: NetworkImage(data.avator??""),
-          radius: (data.avator.isEmpty)?0:data.itemHeight / 2,
+          backgroundImage: NetworkImage(data.avator ?? ""),
+          radius: (data.avator.isEmpty) ? 0 : data.itemHeight / 2,
         ),
         Padding(
           padding: EdgeInsets.fromLTRB(
-              data.avator.isEmpty?data.itemHeight/2:data.itemHeight+5,
+              data.avator.isEmpty ? data.itemHeight / 2 : data.itemHeight + 5,
               data.vercPadding.toDouble(),
               data.itemHeight / 2,
               data.vercPadding.toDouble()),

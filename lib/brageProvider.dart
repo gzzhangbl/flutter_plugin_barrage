@@ -1,9 +1,5 @@
-import 'dart:async';
-import 'dart:collection';
-import 'dart:io';
-
-import 'package:flutter/material.dart';
 import 'package:barrage/barrageItemModel.dart';
+import 'package:flutter/material.dart';
 
 class BarrageProvider with ChangeNotifier {
   int maxLine = 5;

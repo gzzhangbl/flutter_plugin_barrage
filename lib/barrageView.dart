@@ -6,9 +6,16 @@ import 'package:flutter/material.dart';
 
 class BarrageMainView extends StatefulWidget {
   final OnPressed onItemPressed;
-  final Key key1;
+  final Key key;
+  final double width;
+  final double height;
 
-  BarrageMainView({this.key1, this.onItemPressed}) : super(key: key1);
+  BarrageMainView(
+      {this.key,
+      this.onItemPressed,
+      @required this.width,
+      @required this.height})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -17,16 +24,14 @@ class BarrageMainView extends StatefulWidget {
 }
 
 class BarrageMainViewState extends State<BarrageMainView> {
-
   bool isRending = true;
-  BarrageDataManager barrageDataManager = BarrageDataManager.instance;
-
-  BarrageMainViewState();
+  final barrageDataManager = BarrageDataManager.instance;
 
   @override
   Widget build(BuildContext context) {
     var widgets = <Widget>[];
     var barrageList = barrageDataManager.barrageList;
+    final barrageView = widget;
     barrageList.forEach((itemList) {
       itemList.forEach((item) {
         if (item.toLeft < item.widthSize) {
@@ -36,7 +41,9 @@ class BarrageMainViewState extends State<BarrageMainView> {
             child: GestureDetector(
               child: BarrageItemView(item),
               onTap: () {
-
+                if (barrageView.onItemPressed != null) {
+                  barrageView.onItemPressed(item);
+                }
               },
               onTapDown: (details) {
                 item.pause();
@@ -50,7 +57,11 @@ class BarrageMainViewState extends State<BarrageMainView> {
         }
       });
     });
-    return Stack(children: widgets);
+    return Container(
+      width: widget.width,
+      height: widget.height,
+      child: Stack(children: widgets),
+    );
   }
 
   startRending() async {

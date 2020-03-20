@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:barrage/barrageItemModel.dart';
-import 'package:barrage/brageDataManager.dart';
+import 'package:barrage/barrageDataManager.dart';
 import 'package:flutter/material.dart';
 
 class BarrageMainView extends StatefulWidget {

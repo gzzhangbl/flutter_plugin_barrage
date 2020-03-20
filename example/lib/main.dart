@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:barrage/barrage.dart';
 import 'package:barrage/barrageView.dart';
 import 'package:provider/provider.dart';
-import 'package:barrage/brageDataManager.dart';
+import 'package:barrage/barrageDataManager.dart';
 
 void main() => runApp(MyApp());
 

@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:barrage/barrage.dart';
 import 'package:barrage/barrageView.dart';
 import 'package:provider/provider.dart';
-import 'package:barrage/brageProvider.dart';
+import 'package:barrage/brageDataManager.dart';
 
 void main() => runApp(MyApp());
 
@@ -46,18 +46,12 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-        create: (context) => BarrageProvider(),
-        child: MaterialApp(
-          home: Scaffold(
-            appBar: AppBar(
-              title: const Text('Plugin example app'),
-            ),
-            body:DemoView()
-            ),
+    return MaterialApp(
+      home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Plugin example app'),
           ),
-        );
+          body: DemoView()),
+    );
   }
-
-
 }

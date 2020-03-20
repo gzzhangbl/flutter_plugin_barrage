@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:barrage/barrageView.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:barrage/brageProvider.dart';
+import 'package:barrage/brageDataManager.dart';
 import 'package:barrage/barrageItemModel.dart';
 
 class DemoView extends StatefulWidget {
@@ -31,7 +31,7 @@ class DemoViewState extends State {
   Widget build(BuildContext context) {
     // TODO: implement build
     double width = MediaQuery.of(context).size.width;
-    BarrageProvider barrageProvider = Provider.of<BarrageProvider>(context);
+    BarrageDataManager barrageProvider = BarrageDataManager.instance;
     return Container(
       child: Column(
         children: <Widget>[
@@ -59,8 +59,12 @@ class DemoViewState extends State {
                   widthSize: width,
                   backgroundColor: bgColor[Random().nextInt(20) % 3],
                   toLeft: width,
-                  avator:
-                      "http://pic2.zhimg.com/50/v2-fb824dbb6578831f7b5d92accdae753a_hd.jpg"));
+                  avatar: "http://pic2.zhimg"
+                      ".com/50/v2-fb824dbb6578831f7b5d92accdae753a_hd"
+                      ".jpg",
+                  onPressed: (item) {
+                    print("press=====${item.itemContent}");
+                  }));
               _controller.text = "";
             },
           )

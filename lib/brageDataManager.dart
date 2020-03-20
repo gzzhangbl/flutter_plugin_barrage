@@ -1,38 +1,52 @@
 import 'package:barrage/barrageItemModel.dart';
 import 'package:flutter/material.dart';
 
-class BarrageProvider with ChangeNotifier {
+class BarrageDataManager {
+  static BarrageDataManager _singleton;
+
+  factory BarrageDataManager() {
+    return _singleton;
+  }
+
+  static BarrageDataManager get instance => _getInstance();
+
+  static BarrageDataManager _getInstance() {
+    if (_singleton == null) {
+      _singleton = new BarrageDataManager._internal();
+    }
+    return _singleton;
+  }
+
   int maxLine = 5;
   int barrageCount = 3;
-  double defaultSpeed = 100;
+  double defaultSpeed = 200;
   int horizontalItemSpace = 20;
   double screenWidth;
   List<BarrageItemModel> origData = List<BarrageItemModel>();
   List<List<BarrageItemModel>> barrageList = List<List<BarrageItemModel>>();
 
-  BarrageProvider({this.screenWidth = 360}) {
+  BarrageDataManager._internal() {
     List.generate(maxLine, (index) {
       barrageList.add(List<BarrageItemModel>());
     });
   }
 
-
-  changeMaxLine(int maxLine){
-    if(maxLine==this.maxLine||maxLine<0){
+  changeMaxLine(int maxLine) {
+    if (maxLine == this.maxLine || maxLine < 0) {
       return;
     }
-    if(this.maxLine<maxLine){
-      List.generate(maxLine-this.maxLine, (index) {
+    if (this.maxLine < maxLine) {
+      List.generate(maxLine - this.maxLine, (index) {
         barrageList.add(List<BarrageItemModel>());
       });
     }
-    this.maxLine=maxLine;
+    this.maxLine = maxLine;
   }
 
   addItemToList(BarrageItemModel barrage) {
     var tempList = List<List<BarrageItemModel>>();
     bool isAdded = false;
-    for (List<BarrageItemModel> listItem in barrageList.getRange(0,maxLine)) {
+    for (List<BarrageItemModel> listItem in barrageList.getRange(0, maxLine)) {
       if (listItem.length == 0) {
         listItem.add(barrage);
         barrage.line = barrageList.indexOf(listItem);
@@ -45,9 +59,8 @@ class BarrageProvider with ChangeNotifier {
     if (!isAdded && tempList.isNotEmpty) {
       tempList.sort((a, b) => a.last.toLeft.compareTo(b.last.toLeft));
       var lastItem = tempList.first.last;
-      print("${lastItem.toLeft}/${tempList.last.last.toLeft}");
       if (lastItem.toLeft <=
-          barrage.widthSize - barrage.itemWidth - horizontalItemSpace) {
+          lastItem.widthSize - lastItem.itemWidth - horizontalItemSpace) {
         tempList.first.add(barrage);
       } else {
         tempList.first.add(barrage
@@ -58,11 +71,8 @@ class BarrageProvider with ChangeNotifier {
       isAdded = true;
     }
     if (isAdded)
-      barrage.startAnim((item,isFinish) {
-        if(isFinish) {
-          barrageList[item.line].remove(item);
-        }
-        notifyListeners();
+      barrage.startAnim((item) {
+        barrageList[item.line].remove(item);
       });
     return isAdded;
   }

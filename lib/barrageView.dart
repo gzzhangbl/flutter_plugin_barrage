@@ -1,30 +1,49 @@
-import 'package:barrage/barrageItemModel.dart';
-import 'package:barrage/brageProvider.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'dart:async';
 
-class BarrageMainView extends StatelessWidget {
-  const BarrageMainView({Key key}) : super(key: key);
+import 'package:barrage/barrageItemModel.dart';
+import 'package:barrage/brageDataManager.dart';
+import 'package:flutter/material.dart';
+
+class BarrageMainView extends StatefulWidget {
+  final OnPressed onItemPressed;
+  final Key key1;
+
+  BarrageMainView({this.key1, this.onItemPressed}) : super(key: key1);
+
+  @override
+  State<StatefulWidget> createState() {
+    return BarrageMainViewState();
+  }
+}
+
+class BarrageMainViewState extends State<BarrageMainView> {
+
+  bool isRending = true;
+  BarrageDataManager barrageDataManager = BarrageDataManager.instance;
+
+  BarrageMainViewState();
 
   @override
   Widget build(BuildContext context) {
-    BarrageProvider barrageProvider = Provider.of<BarrageProvider>(context);
-    double width = MediaQuery.of(context).size.width;
-    var widgets = List<Widget>();
-    var barrageList = barrageProvider.barrageList;
+    var widgets = <Widget>[];
+    var barrageList = barrageDataManager.barrageList;
     barrageList.forEach((itemList) {
       itemList.forEach((item) {
-        if (item.toLeft < width) {
+        if (item.toLeft < item.widthSize) {
           var widget = Positioned(
             top: item.line * (item.itemHeight + 8),
             left: item.toLeft,
             child: GestureDetector(
               child: BarrageItemView(item),
               onTap: () {
-                print(("tap"));
-                barrageProvider..changeMaxLine(1);
+
               },
-              onPanDown: (e) => print("按下的位置${e.globalPosition}"),
+              onTapDown: (details) {
+                item.pause();
+              },
+              onTapUp: (details) {
+                item.restart();
+              },
             ),
           );
           widgets.add(widget);
@@ -32,6 +51,40 @@ class BarrageMainView extends StatelessWidget {
       });
     });
     return Stack(children: widgets);
+  }
+
+  startRending() async {
+    await Future.delayed(const Duration(milliseconds: 50));
+    Timer.periodic(const Duration(microseconds: 16), (timer) {
+      if (!isRending) {
+        timer.cancel();
+      }
+      setState(() {});
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    isRending = true;
+    startRending();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    isRending = false;
+  }
+
+  test(double width) {
+    List.generate(100, (index) {
+      barrageDataManager.addItemToList(new BarrageItemModel(
+          itemContent: "tesEemoooooo",
+          widthSize: width,
+          avatar: "http://pic2.zhimg"
+              ".com/50/v2-fb824dbb6578831f7b5d92accdae753a_hd.jpg",
+          backgroundColor: Colors.green));
+    });
   }
 }
 
@@ -44,57 +97,35 @@ class BarrageItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
 
-    return Stack(
-      children: <Widget>[
-        ClipRRect(
-          borderRadius: BorderRadius.circular(data.itemHeight / 2),
-          child: Container(
-            width: data.itemWidth,
-            height: data.itemHeight,
-            color: data.backgroundColor,
-          ),
+    var widgets = <Widget>[];
+    if (data.backgroundColor != null &&
+        data.backgroundColor != Colors.transparent) {
+      widgets.add(ClipRRect(
+        borderRadius: BorderRadius.circular(data.itemHeight / 2),
+        child: Container(
+          width: data.itemWidth,
+          height: data.itemHeight,
+          color: data.backgroundColor,
         ),
-        CircleAvatar(
-          backgroundImage: NetworkImage(data.avator ?? ""),
-          radius: (data.avator.isEmpty) ? 0 : data.itemHeight / 2,
-        ),
-        Padding(
-          padding: EdgeInsets.fromLTRB(
-              data.avator.isEmpty ? data.itemHeight / 2 : data.itemHeight + 5,
-              data.vercPadding.toDouble(),
-              data.itemHeight / 2,
-              data.vercPadding.toDouble()),
-          child: Text(
-            data.itemContent,
-            style: TextStyle(fontSize: data.fontSize, color: data.textColor),
-            maxLines: 1,
-          ),
-        )
-      ],
-    );
+      ));
+    }
+    double textPadding = data.itemHeight / 2;
+    if (data.avatar != null && data.avatar.isNotEmpty) {
+      widgets.add(CircleAvatar(
+        backgroundImage: NetworkImage(data.avatar),
+        radius: data.itemHeight / 2,
+      ));
+      textPadding = data.itemHeight + 5;
+    }
+    widgets.add(Padding(
+      padding: EdgeInsets.fromLTRB(textPadding, data.vercPadding.toDouble(),
+          data.itemHeight / 2, data.vercPadding.toDouble()),
+      child: Text(
+        data.itemContent,
+        style: TextStyle(fontSize: data.fontSize, color: data.textColor),
+        maxLines: 1,
+      ),
+    ));
+    return Stack(children: widgets);
   }
 }
-
-//class BarrageViewPainter extends CustomPainter {
-//  final int time;
-//  final BarrageItemModel data;
-//
-//  BarrageViewPainter({this.time, this.data});
-//
-//  @override
-//  void paint(Canvas canvas, Size size) {
-//    final Paint paint = Paint()..style = PaintingStyle.fill;
-//    paint.color = data.backgroundColor ?? Colors.transparent;
-//    var bgHeight = data.textPainter.height + 2 * data.vercPadding;
-//    Rect rt = Rect.fromLTWH(0, 0, data.itemWidth, bgHeight);
-//    RRect rect = RRect.fromRectAndRadius(rt, Radius.circular(bgHeight / 2));
-//    canvas.drawRRect(rect, paint);
-//    Offset textOffset = Offset(bgHeight / 2, data.vercPadding.toDouble());
-//    data.textPainter.paint(canvas, textOffset);
-//  }
-//
-//  @override
-//  bool shouldRepaint(BarrageViewPainter oldPainter) {
-//    return true;
-//  }
-//}

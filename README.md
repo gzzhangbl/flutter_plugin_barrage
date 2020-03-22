@@ -3,6 +3,8 @@
 ## 描述
 >一款fluter 版本的弹幕组件，支持文字大小，颜色，背景，头像，富文本，点击事件，弹道数目变更，弹幕速度
 
+![弹幕](https://github.com/gzzhangbl/flutter_plugin_barrage/blob/master/flutter_barrage.jpg "弹幕")
+
 ## 弹幕组件 BarageMainView
   
 参数 | 类型 |  描述  
@@ -36,7 +38,6 @@ avatar | 头像 | 头像链接 url |
                       15.0),
                 textColor: Colors.lightGreenAccent,
                 backgroundColor: Colors.black12,
-                toLeft: width,
                 avatar: "http://pic2.zhimg"
                     ".com/50/v2-fb824dbb6578831f7b5d92accdae753a_hd"
                     ".jpg",

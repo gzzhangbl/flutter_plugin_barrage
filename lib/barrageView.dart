@@ -9,13 +9,18 @@ class BarrageMainView extends StatefulWidget {
   final Key key;
   final double width;
   final double height;
+  final int channel;
+  final int speed;
+  final Widget videoView;
 
-  BarrageMainView(
-      {this.key,
-      this.onItemPressed,
-      @required this.width,
-      @required this.height})
-      : super(key: key);
+  BarrageMainView(this.width, this.height, this.videoView,
+      {this.key, this.channel = 5, this.speed = 120, this.onItemPressed})
+      : super(key: key) {
+    BarrageDataManager.instance
+      ..width = this.width
+      ..channel = this.channel
+      ..speed = this.speed;
+  }
 
   @override
   State<StatefulWidget> createState() {
@@ -25,16 +30,19 @@ class BarrageMainView extends StatefulWidget {
 
 class BarrageMainViewState extends State<BarrageMainView> {
   bool isRending = true;
-  final barrageDataManager = BarrageDataManager.instance;
+  final _barrageDataManager = BarrageDataManager.instance;
 
   @override
   Widget build(BuildContext context) {
     var widgets = <Widget>[];
-    var barrageList = barrageDataManager.barrageList;
+    if (widget.videoView != null) {
+      widgets.add(widget.videoView);
+    }
+    var barrageList = _barrageDataManager.barrageList;
     final barrageView = widget;
     barrageList.forEach((itemList) {
       itemList.forEach((item) {
-        if (item.toLeft < item.widthSize) {
+        if (item.toLeft < barrageView.width) {
           var widget = Positioned(
             top: item.line * (item.itemHeight + 8),
             left: item.toLeft,
@@ -58,10 +66,12 @@ class BarrageMainViewState extends State<BarrageMainView> {
       });
     });
     return Container(
-      width: widget.width,
-      height: widget.height,
-      child: Stack(children: widgets),
-    );
+        width: widget.width,
+        height: widget.height,
+        child: Stack(
+          children: widgets,
+          overflow: Overflow.clip,
+        ));
   }
 
   startRending() async {
@@ -89,9 +99,7 @@ class BarrageMainViewState extends State<BarrageMainView> {
 
   test(double width) {
     List.generate(100, (index) {
-      barrageDataManager.addItemToList(new BarrageItemModel(
-          itemContent: "tesEemoooooo",
-          widthSize: width,
+      _barrageDataManager.addBarrage(new BarrageItemModel(
           avatar: "http://pic2.zhimg"
               ".com/50/v2-fb824dbb6578831f7b5d92accdae753a_hd.jpg",
           backgroundColor: Colors.green));
@@ -120,22 +128,13 @@ class BarrageItemView extends StatelessWidget {
         ),
       ));
     }
-    double textPadding = data.itemHeight / 2;
-    if (data.avatar != null && data.avatar.isNotEmpty) {
-      widgets.add(CircleAvatar(
-        backgroundImage: NetworkImage(data.avatar),
-        radius: data.itemHeight / 2,
-      ));
-      textPadding = data.itemHeight + 5;
-    }
-    widgets.add(Padding(
-      padding: EdgeInsets.fromLTRB(textPadding, data.vercPadding.toDouble(),
-          data.itemHeight / 2, data.vercPadding.toDouble()),
-      child: Text(
-        data.itemContent,
+    widgets.add(RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(
         style: TextStyle(fontSize: data.fontSize, color: data.textColor),
-        maxLines: 1,
+        children: data.textSpanList,
       ),
+      maxLines: 1,
     ));
     return Stack(children: widgets);
   }

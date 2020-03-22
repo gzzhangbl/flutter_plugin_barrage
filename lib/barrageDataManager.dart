@@ -17,39 +17,47 @@ class BarrageDataManager {
     return _singleton;
   }
 
-  int maxLine = 5;
-  int barrageCount = 3;
-  double defaultSpeed = 200;
+  int _channel;
+  int _speed;
   int horizontalItemSpace = 20;
-  double screenWidth;
+  int verItemSpace = 8;
+  double _width;
   List<BarrageItemModel> origData = List<BarrageItemModel>();
   List<List<BarrageItemModel>> barrageList = List<List<BarrageItemModel>>();
 
-  BarrageDataManager._internal() {
-    List.generate(maxLine, (index) {
-      barrageList.add(List<BarrageItemModel>());
-    });
-  }
+  BarrageDataManager._internal();
 
-  changeMaxLine(int maxLine) {
-    if (maxLine == this.maxLine || maxLine < 0) {
-      return;
-    }
-    if (this.maxLine < maxLine) {
-      List.generate(maxLine - this.maxLine, (index) {
+  set channel(int channel) {
+    if (this._channel == null) {
+      List.generate(channel, (index) {
         barrageList.add(List<BarrageItemModel>());
       });
+    } else {
+      if (channel == this._channel || channel < 0) {
+        return;
+      }
+      if (this._channel < channel) {
+        List.generate(channel - this._channel, (index) {
+          barrageList.add(List<BarrageItemModel>());
+        });
+      }
     }
-    this.maxLine = maxLine;
+    this._channel = channel;
   }
 
-  addItemToList(BarrageItemModel barrage) {
+  set speed(int speed) => this._speed = speed;
+
+  set width(double width) => this._width = width;
+
+  addBarrage(BarrageItemModel barrage) {
     var tempList = List<List<BarrageItemModel>>();
     bool isAdded = false;
-    for (List<BarrageItemModel> listItem in barrageList.getRange(0, maxLine)) {
-      if (listItem.length == 0) {
+    for (List<BarrageItemModel> listItem in barrageList.getRange(0, _channel)) {
+      if (listItem.isEmpty) {
+        barrage
+          ..toLeft = _width
+          ..line = barrageList.indexOf(listItem);
         listItem.add(barrage);
-        barrage.line = barrageList.indexOf(listItem);
         isAdded = true;
         break;
       } else {
@@ -60,7 +68,7 @@ class BarrageDataManager {
       tempList.sort((a, b) => a.last.toLeft.compareTo(b.last.toLeft));
       var lastItem = tempList.first.last;
       if (lastItem.toLeft <=
-          lastItem.widthSize - lastItem.itemWidth - horizontalItemSpace) {
+          _width - lastItem.itemWidth - horizontalItemSpace) {
         tempList.first.add(barrage);
       } else {
         tempList.first.add(barrage
@@ -73,7 +81,7 @@ class BarrageDataManager {
     if (isAdded)
       barrage.startAnim((item) {
         barrageList[item.line].remove(item);
-      });
+      }, _speed);
     return isAdded;
   }
 }

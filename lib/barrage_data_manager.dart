@@ -1,4 +1,4 @@
-import 'package:barrage/barrageItemModel.dart';
+import 'package:barrage/barrage_item_model.dart';
 
 class BarrageDataManager {
   static BarrageDataManager _singleton;

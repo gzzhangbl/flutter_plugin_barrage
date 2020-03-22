@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:barrage/barrage.dart';
-import 'package:barrage_example/barrageDemoView.dart';
+import 'package:barrage_example/barrage_demo_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

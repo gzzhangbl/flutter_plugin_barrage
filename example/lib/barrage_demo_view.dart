@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'package:barrage/barrageDataManager.dart';
-import 'package:barrage/barrageItemModel.dart';
-import 'package:barrage/barrageView.dart';
+import 'package:barrage/barrage_data_manager.dart';
+import 'package:barrage/barrage_item_model.dart';
+import 'package:barrage/barrage_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

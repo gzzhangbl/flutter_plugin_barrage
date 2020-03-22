@@ -18,8 +18,6 @@ class DemoViewState extends State {
   TextEditingController _controller = TextEditingController();
   BarrageDataController _barrageControlLer = BarrageDataController();
 
-  var bgColor = [Colors.yellow, Colors.red, Colors.black26];
-  var textColor = [Colors.grey, Colors.green, Colors.black, Colors.blue];
 
   @override
   void dispose() {

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:barrage/barrage_data_manager.dart';
+import 'package:barrage/barrage_data_controller.dart';
 import 'package:barrage/barrage_item_model.dart';
 import 'package:flutter/material.dart';
 
@@ -12,11 +12,12 @@ class BarrageMainView extends StatefulWidget {
   final int channel;
   final int speed;
   final Widget videoView;
+  final BarrageDataController _controller;
 
-  BarrageMainView(this.width, this.height, this.videoView,
+  BarrageMainView(this.width, this.height, this.videoView, this._controller,
       {this.key, this.channel = 5, this.speed = 120, this.onItemPressed})
       : super(key: key) {
-    BarrageDataManager.instance
+    this._controller
       ..width = this.width
       ..channel = this.channel
       ..speed = this.speed;
@@ -30,7 +31,8 @@ class BarrageMainView extends StatefulWidget {
 
 class BarrageMainViewState extends State<BarrageMainView> {
   bool isRending = true;
-  final _barrageDataManager = BarrageDataManager.instance;
+
+  // final _barrageDataManager = BarrageDataManager.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class BarrageMainViewState extends State<BarrageMainView> {
     if (widget.videoView != null) {
       widgets.add(widget.videoView);
     }
-    var barrageList = _barrageDataManager.barrageList;
+    var barrageList = widget._controller.barrageList;
     final barrageView = widget;
     barrageList.forEach((itemList) {
       itemList.forEach((item) {
@@ -95,15 +97,6 @@ class BarrageMainViewState extends State<BarrageMainView> {
   void dispose() {
     super.dispose();
     isRending = false;
-  }
-
-  test(double width) {
-    List.generate(100, (index) {
-      _barrageDataManager.addBarrage(new BarrageItemModel(
-          avatar: "http://pic2.zhimg"
-              ".com/50/v2-fb824dbb6578831f7b5d92accdae753a_hd.jpg",
-          backgroundColor: Colors.green));
-    });
   }
 }
 

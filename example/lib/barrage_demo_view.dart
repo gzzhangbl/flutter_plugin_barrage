@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:barrage/barrage_data_manager.dart';
+import 'package:barrage/barrage_data_controller.dart';
 import 'package:barrage/barrage_item_model.dart';
 import 'package:barrage/barrage_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,6 +16,7 @@ class DemoView extends StatefulWidget {
 
 class DemoViewState extends State {
   TextEditingController _controller = TextEditingController();
+  BarrageDataController _barrageControlLer = BarrageDataController();
 
   var bgColor = [Colors.yellow, Colors.red, Colors.black26];
   var textColor = [Colors.grey, Colors.green, Colors.black, Colors.blue];
@@ -39,6 +40,7 @@ class DemoViewState extends State {
             Container(
               color: Colors.greenAccent,
             ),
+            _barrageControlLer,
             onItemPressed: (item) {
               print("onPreassed===${item.barrageText.content}");
               showDialog(
@@ -71,8 +73,7 @@ class DemoViewState extends State {
                 ),
                 onChanged: (txt) {
                   print(">>>>chanel==t$txt");
-                  BarrageDataManager.instance
-                    ..channel = int.parse(txt);
+                  _barrageControlLer..channel = int.parse(txt);
                 },
               ),
               width: 100),
@@ -90,15 +91,15 @@ class DemoViewState extends State {
             child: Text("发送一条弹幕"),
             onPressed: () {
               if (_controller.text.isEmpty) return;
-              BarrageDataManager.instance.addBarrage(BarrageItemModel(
+              _barrageControlLer.addBarrage(BarrageItemModel(
                 barrageText: BarrageText(content: " ${_controller.text}")
                   ..text(" 尾部 ", txtColor: "#EE6AA7")
                   ..image(
                       "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584860287319&di=cc6522313d8ac296de7dcbcaa6a36366&imgtype=0&src=http%3A%2F%2Fpic22.nipic.com%2F20120727%2F4819347_114740814000_2.jpg",
                       30.0,
                       15.0),
-                textColor: textColor[Random().nextInt(20) % 4],
-                backgroundColor: bgColor[Random().nextInt(20) % 3],
+                textColor: Colors.lightGreenAccent,
+                backgroundColor: Colors.black12,
                 toLeft: width,
                 avatar: "http://pic2.zhimg"
                     ".com/50/v2-fb824dbb6578831f7b5d92accdae753a_hd"

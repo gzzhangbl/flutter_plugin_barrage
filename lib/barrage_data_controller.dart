@@ -1,21 +1,6 @@
 import 'package:barrage/barrage_item_model.dart';
 
-class BarrageDataManager {
-  static BarrageDataManager _singleton;
-
-  factory BarrageDataManager() {
-    return _singleton;
-  }
-
-  static BarrageDataManager get instance => _getInstance();
-
-  static BarrageDataManager _getInstance() {
-    if (_singleton == null) {
-      _singleton = new BarrageDataManager._internal();
-    }
-    return _singleton;
-  }
-
+class BarrageDataController {
   int _channel;
   int _speed;
   int horizontalItemSpace = 20;
@@ -24,17 +9,13 @@ class BarrageDataManager {
   List<BarrageItemModel> origData = List<BarrageItemModel>();
   List<List<BarrageItemModel>> barrageList = List<List<BarrageItemModel>>();
 
-  BarrageDataManager._internal();
-
   set channel(int channel) {
     if (this._channel == null) {
       List.generate(channel, (index) {
         barrageList.add(List<BarrageItemModel>());
       });
     } else {
-      if (channel == this._channel || channel < 0) {
-        return;
-      }
+      if (channel == this._channel || channel < 0) return;
       if (this._channel < channel) {
         List.generate(channel - this._channel, (index) {
           barrageList.add(List<BarrageItemModel>());

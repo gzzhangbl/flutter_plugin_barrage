@@ -18,7 +18,7 @@ onItemPressed | OnPressed | 弹幕点击事件|
 ## 弹幕实体类
 参数 | 类型 |  描述  
 -|-|-
-barrageText | BarrageText | 弹幕内容 |
+barrageText | BarrageText | 弹幕富文本内容描述 |
 backgroundColor | Color | 弹幕背景颜色，默认为透明 |
 _controller | BarrageDataController | 弹幕操作的控制器 |
 avatar | 头像 | 头像链接 url |

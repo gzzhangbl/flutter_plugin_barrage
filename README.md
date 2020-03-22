@@ -3,7 +3,7 @@
 ## 描述
 >一款fluter 版本的弹幕组件，支持文字大小，颜色，背景，头像，富文本，点击事件，弹道数目变更，弹幕速度
 
-![弹幕](https://github.com/gzzhangbl/flutter_plugin_barrage/blob/master/flutter_barrage.jpg "弹幕")
+![弹幕](https://github.com/gzzhangbl/flutter_plugin_barrage/blob/master/demo_barrage.jpg "弹幕")
 
 ## 弹幕组件 BarageMainView
   

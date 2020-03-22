@@ -98,7 +98,6 @@ class DemoViewState extends State {
                       15.0),
                 textColor: Colors.lightGreenAccent,
                 backgroundColor: Colors.black12,
-                toLeft: width,
                 avatar: "http://pic2.zhimg"
                     ".com/50/v2-fb824dbb6578831f7b5d92accdae753a_hd"
                     ".jpg",

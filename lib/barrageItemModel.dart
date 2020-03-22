@@ -1,7 +1,8 @@
+import 'dart:convert' as convert;
 import 'dart:math';
+
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
-import 'dart:convert' as convert;
 
 typedef OnPressed = void Function(BarrageItemModel itemModel);
 typedef OnDismissed = void Function(BarrageItemModel itemModel);

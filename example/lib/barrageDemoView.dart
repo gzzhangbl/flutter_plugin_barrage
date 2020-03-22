@@ -1,10 +1,10 @@
 import 'dart:math';
-import 'package:flutter/cupertino.dart';
-import 'package:barrage/barrageView.dart';
-import 'package:flutter/material.dart';
+
 import 'package:barrage/barrageDataManager.dart';
 import 'package:barrage/barrageItemModel.dart';
+import 'package:barrage/barrageView.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class DemoView extends StatefulWidget {
   @override

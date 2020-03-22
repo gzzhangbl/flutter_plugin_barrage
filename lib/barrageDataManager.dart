@@ -1,5 +1,4 @@
 import 'package:barrage/barrageItemModel.dart';
-import 'package:flutter/material.dart';
 
 class BarrageDataManager {
   static BarrageDataManager _singleton;

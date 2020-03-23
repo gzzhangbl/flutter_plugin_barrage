@@ -18,7 +18,6 @@ class DemoViewState extends State {
   TextEditingController _controller = TextEditingController();
   BarrageDataController _barrageControlLer = BarrageDataController();
 
-
   @override
   void dispose() {
     _controller.dispose();
@@ -35,10 +34,10 @@ class DemoViewState extends State {
           BarrageMainView(
             width,
             width / 2,
-            Container(
+            _barrageControlLer,
+            videoView: Container(
               color: Colors.greenAccent,
             ),
-            _barrageControlLer,
             onItemPressed: (item) {
               print("onPreassed===${item.barrageText.content}");
               showDialog(

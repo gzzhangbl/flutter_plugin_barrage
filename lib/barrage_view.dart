@@ -61,6 +61,9 @@ class BarrageMainViewState extends State<BarrageMainView> {
               onTapUp: (details) {
                 item.restart();
               },
+              onTapCancel: (){
+                item.restart();
+              },
             ),
           );
           widgets.add(widget);

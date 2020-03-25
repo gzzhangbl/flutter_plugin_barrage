@@ -34,10 +34,10 @@ class DemoViewState extends State {
           BarrageMainView(
             width,
             width / 2,
-            Container(
+            _barrageControlLer,
+            videoView: Container(
               color: Colors.greenAccent,
             ),
-            _barrageControlLer,
             onItemPressed: (item) {
               print("onPreassed===${item.barrageText.content}");
               showDialog(

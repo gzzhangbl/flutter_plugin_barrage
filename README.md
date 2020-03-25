@@ -3,7 +3,7 @@
 ## 描述
 >一款fluter 版本的弹幕组件，支持文字大小，颜色，背景，头像，富文本，点击事件，弹道数目变更，弹幕速度
 
-![弹幕](https://github.com/gzzhangbl/flutter_plugin_barrage/blob/master/flutter_barrage.jpg "弹幕")
+![弹幕](https://github.com/gzzhangbl/flutter_plugin_barrage/blob/master/demo_barrage.jpg "弹幕")
 
 ## 弹幕组件 BarageMainView
   
@@ -26,7 +26,7 @@ _controller | BarrageDataController | 弹幕操作的控制器 |
 avatar | 头像 | 头像链接 url |
 
 ## 使用 
-#### 1，创建 BarageMainView 传入相关参数 width height _controller widget 为必填
+#### 1，创建 BarageMainView 传入相关参数 width height _controller 为必填
 #### 2 发送弹幕 _controller.addBarrage(BarrageItemModel)方法 
 ```
  _barrageControlLer.addBarrage(BarrageItemModel(

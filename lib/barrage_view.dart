@@ -14,8 +14,8 @@ class BarrageMainView extends StatefulWidget {
   final Widget videoView;
   final BarrageDataController _controller;
 
-  BarrageMainView(this.width, this.height, this.videoView, this._controller,
-      {this.key, this.channel = 5, this.speed = 120, this.onItemPressed})
+  BarrageMainView(this.width, this.height, this._controller,
+      {this.key,  this.videoView,this.channel = 5, this.speed = 120, this.onItemPressed})
       : super(key: key) {
     this._controller
       ..width = this.width
@@ -59,6 +59,9 @@ class BarrageMainViewState extends State<BarrageMainView> {
                 item.pause();
               },
               onTapUp: (details) {
+                item.restart();
+              },
+              onTapCancel: (){
                 item.restart();
               },
             ),

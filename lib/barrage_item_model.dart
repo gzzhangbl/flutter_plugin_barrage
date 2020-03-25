@@ -46,7 +46,7 @@ class BarrageItemModel extends State<StatefulWidget>
       if (map.containsKey("text")) {
         final textStyle = TextStyle(
           fontSize: fontSize,
-          color: BarrageText.hexToColor(map["textColor"]),
+          color: map["textColor"]!=null?BarrageText.hexToColor(map["textColor"]):textColor,
           fontWeight: FontWeight.w500,
         );
         var textSpan = TextSpan(

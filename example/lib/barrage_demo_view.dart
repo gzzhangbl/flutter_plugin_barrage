@@ -18,7 +18,6 @@ class DemoViewState extends State {
   TextEditingController _controller = TextEditingController();
   BarrageDataController _barrageControlLer = BarrageDataController();
 
-
   @override
   void dispose() {
     _controller.dispose();
@@ -91,11 +90,14 @@ class DemoViewState extends State {
               if (_controller.text.isEmpty) return;
               _barrageControlLer.addBarrage(BarrageItemModel(
                 barrageText: BarrageText(content: " ${_controller.text}")
-                  ..text(" 尾部 ", txtColor: "#EE6AA7")
+                  ..text(" 小明 ", txtColor: "#EE6AA7")
+                  ..text("送")
+                  ..text(" 小丽 ", txtColor: "#EE6AA7")
                   ..image(
                       "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584860287319&di=cc6522313d8ac296de7dcbcaa6a36366&imgtype=0&src=http%3A%2F%2Fpic22.nipic.com%2F20120727%2F4819347_114740814000_2.jpg",
                       30.0,
-                      15.0),
+                      15.0)
+                  ..text("X 1"),
                 textColor: Colors.lightGreenAccent,
                 backgroundColor: Colors.black12,
                 avatar: "http://pic2.zhimg"

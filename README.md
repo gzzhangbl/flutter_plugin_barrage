@@ -16,7 +16,7 @@ channel | int | 弹道数 默认为5|
 speed | int |速度，每秒钟的距离|
 onItemPressed | OnPressed | 弹幕点击事件|
 
-### 弹幕实体类
+### 弹幕实体类 BarrageItemModel
 参数 | 类型 |  描述  
 -|-|-
 barrageText | BarrageText | 弹幕富文本内容描述 |

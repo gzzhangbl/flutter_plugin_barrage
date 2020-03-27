@@ -41,7 +41,7 @@ avatar | 头像 | 头像链接 url |
                 avatar: "头像链接",
               ));
 ```
-BarrageText为富文本描述 text(text,color)添加文字,image(url,width,height),添加图片
+其中：BarrageText为富文本描述 text(text,color)添加文字,image(url,width,height)添加图片，需要设置宽高
 #### 3，改变速度 
 >调用 BarrageDataController speed（int）方法改变
 #### 4，改变弹道数，

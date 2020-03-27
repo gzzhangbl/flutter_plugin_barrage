@@ -25,7 +25,8 @@ _controller | BarrageDataController | 弹幕操作的控制器 |
 avatar | 头像 | 头像链接 url |
 
 ### 使用 
-#### 1，创建 BarageMainView 传入相关参数 width height _controller 为必填
+#### 1，创建 BarageMainView 
+>传入相关参数 其中width height _controller 为必填
 #### 2 发送弹幕 
 >调用 控制器 BarrageDataController的 addBarrage(BarrageItemModel)方法 
 ```dart
